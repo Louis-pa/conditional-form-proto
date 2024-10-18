@@ -40,10 +40,10 @@
           <select id="source" class="form-control">
             <option value="" disabled selected>Select a source</option>
             <option value="budgets">Budgets</option>
-            <option value="savings">Savings</option>
-            <option value="opportunity">Opportunity</option>
-            <option value="contract">Contract</option>
-            <option value="supplier">Supplier</option>
+            <option value="savings">Savings - Non fonctional for Poc</option>
+            <option value="opportunity">Opportunity - Non fonctional for Poc</option>
+            <option value="contract">Contract - Non fonctional for Poc</option>
+            <option value="supplier">Supplier - Non fonctional for Poc </option>
           </select>
         </div>
 
@@ -57,6 +57,17 @@
             <option value="axis">Stakeholder - Non functional for POC</option>
             <option value="status">Business Units - Non functional for POC</option>
             <option value="status">Action type - Non functional for POC</option>
+          </select>
+        </div>
+
+        <!-- New Analytical Axis Dropdown -->
+        <div class="form-group mb-3" id="analyticalAxisSection" style="display: none;">
+          <label for="analyticalAxis" class="form-label required"><i class="fas fa-chart-line"></i> Analytical Axis</label>
+          <select id="analyticalAxis" class="form-control">
+            <option value="" disabled selected>Select an analytical axis</option>
+            <option value="axis1">Analytical Axis 1</option>
+            <option value="axis2">Analytical Axis 2</option>
+            <option value="axis3">Analytical Axis 3</option>
           </select>
         </div>
 
@@ -124,14 +135,23 @@
   <script>
     document.getElementById('source').addEventListener('change', function() {
       document.getElementById('fieldSection').style.display = this.value ? 'block' : 'none';
+      hideSubsequentSections('fieldSection');
     });
 
     document.getElementById('attributeName').addEventListener('change', function() {
+      var analyticalAxisSection = document.getElementById('analyticalAxisSection');
+      analyticalAxisSection.style.display = this.value === 'axis' ? 'block' : 'none';
+      hideSubsequentSections('analyticalAxisSection');
+    });
+
+    document.getElementById('analyticalAxis').addEventListener('change', function() {
       document.getElementById('conditionSection').style.display = this.value ? 'block' : 'none';
+      hideSubsequentSections('conditionSection');
     });
 
     document.getElementById('conditionOperator').addEventListener('change', function() {
       document.getElementById('valuesSection').style.display = this.value ? 'block' : 'none';
+      hideSubsequentSections('valuesSection');
     });
 
     document.getElementById('valueMultiple').addEventListener('change', function() {
@@ -248,6 +268,15 @@
         newConditionSection.querySelector('.isSection').style.display = 'block';
       });
     });
+
+    function hideSubsequentSections(currentSectionId) {
+      var sections = ['fieldSection', 'analyticalAxisSection', 'conditionSection', 'valuesSection', 'thenSection', 'isSection'];
+      var currentIndex = sections.indexOf(currentSectionId);
+      
+      for (var i = currentIndex + 1; i < sections.length; i++) {
+        document.getElementById(sections[i]).style.display = 'none';
+      }
+    }
   </script>
 </body>
 </html>
